@@ -1,0 +1,119 @@
+/* Base reset, typography, focus, motion, grain overlay. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--surface-1) 0%, var(--surface-2) 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Subtle paper grain over everything (opacity .04, Press parity). */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background-image: var(--paper-noise);
+  opacity: 0.04;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 0.5em;
+}
+
+h1 { font-size: clamp(2rem, 4vw, 2.8rem); }
+h2 { font-size: clamp(1.15rem, 2vw, 1.45rem); }
+h3 { font-size: 1.1rem; }
+h4 { font-size: 1rem; }
+
+p { margin: 0 0 1em; }
+a { color: var(--navy); text-decoration-thickness: 1.5px; text-underline-offset: 2px; }
+a:hover { color: var(--rust); }
+
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--navy);
+  color: var(--surface-0);
+}
+
+img, svg { max-width: 100%; height: auto; display: block; }
+
+code, pre, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+pre {
+  background: var(--surface-ink);
+  color: #f3f0e8;
+  padding: var(--sp-lg);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+hr {
+  border: 0;
+  border-top: var(--line-soft);
+  margin: var(--sp-2xl) 0;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  background: var(--navy);
+  color: #fff;
+  padding: var(--sp-sm) var(--sp-lg);
+  border-radius: 0 0 var(--radius-sm) 0;
+}
+.skip-link:focus { left: 0; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print */
+@media print {
+  body::after { display: none; }
+  .no-print { display: none !important; }
+}
