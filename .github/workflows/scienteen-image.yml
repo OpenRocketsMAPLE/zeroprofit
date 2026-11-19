@@ -1,0 +1,19 @@
+name: Build Scientific Teenager relay image
+
+on:
+  push:
+    branches:
+      - deploy/scienteen-relay-v1.0.2
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t ttl.sh/openrockets-scienteen-relay-1571890811552014356:24h .
+      - name: Push temporary public image
+        run: docker push ttl.sh/openrockets-scienteen-relay-1571890811552014356:24h
