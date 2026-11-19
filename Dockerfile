@@ -5,6 +5,7 @@ RUN cat /tmp/source-parts/source.b64.* | tr -d '\n\r' | base64 -d > /tmp/source.
  && echo "5c64b31bcc97bd61ea9186988b9b0799a4f4daafb041a8249c0d2eb1d9a67094  /tmp/source.tar.gz" | sha256sum -c - \
  && tar -xzf /tmp/source.tar.gz -C /app \
  && rm -rf /tmp/source.tar.gz /tmp/source-parts
+RUN sed -i 's/function guildSafe(command: Record<string, unknown>)/function guildSafe(command: any)/' src/commands.ts
 RUN npm ci --ignore-scripts
 RUN npm run build
 
